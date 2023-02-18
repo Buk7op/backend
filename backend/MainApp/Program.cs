@@ -9,7 +9,7 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
 var mongoDbSettings = builder.Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
-
+Console.WriteLine(mongoDbSettings.ConnectionString + " --- " + mongoDbSettings.Name);
 services.AddIdentity<ApplicationUser, ApplicationRole>()
         .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
         (
