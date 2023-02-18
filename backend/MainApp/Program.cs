@@ -1,6 +1,8 @@
 
 
 using IdentityServer.Models;
+using IdentityServer.Models.Settings;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +13,26 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
 var mongoDbSettings = builder.Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
-Console.WriteLine(mongoDbSettings.ConnectionString + " --- " + mongoDbSettings.Name);
 services.AddIdentity<ApplicationUser, ApplicationRole>()
         .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
         (
             mongoDbSettings.ConnectionString, mongoDbSettings.Name
-        );
+);
+
+var identityServerSettings = builder.Configuration.GetSection(nameof(IdentityServerSettings)).Get<IdentityServerSettings>();
+
+services.AddIdentityServer(options =>
+{
+    options.Events.RaiseErrorEvents = true;
+    options.Events.RaiseFailureEvents = true;
+    options.Events.RaiseErrorEvents = true;
+})
+    .AddAspNetIdentity<ApplicationUser>()
+    .AddInMemoryApiScopes(identityServerSettings.ApiScopes)
+    .AddInMemoryApiResources(identityServerSettings.ApiResources)
+    .AddInMemoryClients(identityServerSettings.Clients)
+    .AddInMemoryIdentityResources(identityServerSettings.IdentityResources)
+    .AddDeveloperSigningCredential();
 
 
 var app = builder.Build();
@@ -33,10 +49,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers();   
 
 app.Run();

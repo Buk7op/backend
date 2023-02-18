@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MainApp": {
+    "IdenityServer": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
