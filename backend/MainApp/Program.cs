@@ -1,4 +1,6 @@
-using Identity.Models;
+
+
+using IdentityServer.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
