@@ -10,14 +10,26 @@ services.AddSwaggerGen();
 
 
 
-services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = "Cookies";
+        options.DefaultChallengeScheme = "oidc";
+    }).AddCookie("Cookies")
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://localhost:7182";
+        options.Authority = "https://localhost:5001";
         options.Audience = "IS4API";
+    }).AddOpenIdConnect("oidc", options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.ClientId = "MainApp";
+        options.ResponseType = "code";
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("fullaccess");
+        options.SaveTokens = true;
     });
-
-
 
 
 var app = builder.Build();
