@@ -18,11 +18,11 @@ services.AddAuthentication(options =>
     }).AddCookie("Cookies")
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://localhost:5001";
+        options.Authority = "https://172.18.0.2:443";
         options.Audience = "IS4API";
     }).AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = "https://localhost:5001";
+        options.Authority = "https://172.18.0.2:443";
         options.ClientId = "MainApp";
         options.ResponseType = "code";
         options.Scope.Add("openid");
