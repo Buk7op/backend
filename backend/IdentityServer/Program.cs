@@ -23,12 +23,6 @@ services.AddIdentity<ApplicationUser, ApplicationRole>()
 var identityServerSettings = builder.Configuration.GetSection(nameof(IdentityServerSettings)).Get<IdentityServerSettings>();
 
 
-Console.WriteLine(
-    identityServerSettings.ApiScopes.FirstOrDefault() + "---" +
-    identityServerSettings.ApiResources.FirstOrDefault() + "---" +
-    identityServerSettings.Clients.FirstOrDefault() + "---" +
-    identityServerSettings.IdentityResources.FirstOrDefault() + "---"); 
-
 services.AddIdentityServer(options =>
 {
     options.Events.RaiseErrorEvents = true;
