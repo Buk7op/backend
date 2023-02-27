@@ -81,3 +81,5 @@ Blog
 About
 
 *.jwk
+*.crt
+*.pem
