@@ -12,6 +12,7 @@ services:
         - ./Envoy/key.pem:/etc/ssl/certs/key.pem
   identityserver:
     build: IdentityServer/
+    container_name: identityserver
     ports:
       - "8080:80"
       - "8081:443"
@@ -25,6 +26,7 @@ services:
 
   mainapp:
     build: MainApp/
+    container_name: mainapp
     ports:
       - "8082:80"
       - "8083:443"

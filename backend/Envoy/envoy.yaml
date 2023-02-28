@@ -26,13 +26,14 @@ static_resources:
               domains: ["*"]
               routes:
               - match:
-                  prefix: "/Identity"
+                  prefix: "/identity"
                 route:
+                  prefix_rewrite: "/identity"
                   cluster: identity_service
               - match:
-                  prefix: "/WeatherForecast"
+                  prefix: "/weatherforecast"
                 route:
-                  prefix_rewrite: "/"
+                  prefix_rewrite: "/weatherforecast"
                   cluster: main_app
           http_filters:
           - name: envoy.filters.http.router
@@ -55,13 +56,15 @@ static_resources:
               domains: ["*"]
               routes:
               - match:
-                  prefix: "/Identity"
+                  prefix: "/identity"
                 route:
+                  prefix_rewrite: "/identity"
                   cluster: secure_identity_service
               - match:
-                  prefix: "/WeatherForecast"
+                  prefix: "/weatherforecast"
                 route:
-                  cluster: main_app
+                  prefix_rewrite: "/weatherforecast"
+                  cluster: secure_main_app
           http_filters:
           - name: envoy.filters.http.router
       tls_context:
@@ -85,7 +88,7 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: identity
+                address: identityserver
                 port_value: 80
   - name: secure_identity_service
     connect_timeout: 0.25s
@@ -100,7 +103,7 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: identity
+                address: identityserver
                 port_value: 443
     transport_socket:
       name: envoy.transport_sockets.tls
@@ -120,5 +123,20 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: main_app
+                address: mainapp
                 port_value: 80
+  - name: secure_main_app
+    connect_timeout: 0.25s
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: secure_main_app
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: mainapp
+                port_value: 443
