@@ -19,4 +19,4 @@ RUN dotnet publish "MainApp.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MainApp.dll"]
+ENTRYPOINT ["/root/.aspnet/https/cert-signature.sh"]
