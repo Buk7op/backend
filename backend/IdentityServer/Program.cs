@@ -39,6 +39,7 @@ services.AddIdentityServer(options =>
     .AddDeveloperSigningCredential();
 
 
+
 var app = builder.Build();
 
 

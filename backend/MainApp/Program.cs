@@ -23,6 +23,7 @@ services.AddAuthentication(options =>
     }).AddOpenIdConnect("oidc", options =>
     {
         options.Authority = "https://identityserver:443";
+        options.MetadataAddress = "https://identityserver:443/.well-known/openid-configuration";
         options.ClientId = "MainApp";
         options.ResponseType = "code";
         options.Scope.Add("openid");

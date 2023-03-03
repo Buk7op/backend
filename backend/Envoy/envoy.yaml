@@ -58,7 +58,7 @@ static_resources:
               - match:
                   prefix: "/identity"
                 route:
-                  prefix_rewrite: "/identity"
+                  prefix_rewrite: "/"
                   cluster: secure_identity_service
               - match:
                   prefix: "/weatherforecast"
