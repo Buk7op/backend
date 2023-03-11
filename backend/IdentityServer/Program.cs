@@ -30,6 +30,7 @@ services.AddIdentityServer(options =>
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseErrorEvents = true;
     options.UserInteraction.LoginUrl = "/Identity/Login";
+    //options.UserInteraction.LoginUrl = "https://angularApp:8082/Identity/Login";
 })
     .AddAspNetIdentity<ApplicationUser>()
     .AddInMemoryApiScopes(identityServerSettings.ApiScopes)
