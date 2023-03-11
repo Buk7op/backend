@@ -25,7 +25,7 @@ var identityServerSettings = builder.Configuration.GetSection(nameof(IdentitySer
 
 services.AddIdentityServer(options =>
 {
-    options.IssuerUri = "https://identityserver:443";
+    options.IssuerUri = "https://identityserver:8081";
     options.Events.RaiseErrorEvents = true;
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseErrorEvents = true;

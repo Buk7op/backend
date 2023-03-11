@@ -1,39 +1,34 @@
 version: '3'
 services:
-  envoygateway:
-    build: Envoy/
-    ports:
-        - "9901:9901"
-        - "10000:10000"
-        - "10001:10001"
-    volumes:
-        - ./Envoy/envoy.yaml:/etc/envoy/envoy.yaml
-        - ./Envoy/https.crt:/etc/ssl/certs/https.crt
-        - ./Envoy/key.pem:/etc/ssl/certs/key.pem
+  #envoygateway:
+  #  build: Envoy/
+  #  ports:
+  #      - "9901:9901"
+  #      - "10000:10000"
+  #      - "10001:10001"
+  #  volumes:
+  #      - ./Envoy/envoy.yaml:/etc/envoy/envoy.yaml
+  #      - ./Envoy/https.crt:/etc/ssl/certs/https.crt
+  #      - ./Envoy/key.pem:/etc/ssl/certs/key.pem
   identityserver:
     build: IdentityServer/
     container_name: identityserver
     ports:
-      - "80:80"
-      - "443:443"
+      - "8081:8081"
     environment:
-      ASPNETCORE_URLS: "https://+;http://+"
-      ASPNETCORE_HTTPS_PORT: "8081"
-      ASPNETCORE_ENVIRONMENT: "Development"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8081
     volumes:
       - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
       - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
-
   mainapp:
     build: MainApp/
     container_name: mainapp
     ports:
-      - "8082:80"
-      - "8083:443"
+      - "8083:8083"
     environment:
-      ASPNETCORE_URLS: "https://+;http://+"
-      ASPNETCORE_HTTPS_PORT: "8083"
-      ASPNETCORE_ENVIRONMENT: "Development"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8083
     volumes:
       - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
       - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/

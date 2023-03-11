@@ -18,12 +18,12 @@ services.AddAuthentication(options =>
     }).AddCookie("Cookies")
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://identityserver:443";
+        options.Authority = "https://identityserver:8081";
         options.Audience = "IS4API";
     }).AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = "https://identityserver:443";
-        options.MetadataAddress = "https://identityserver:443/.well-known/openid-configuration";
+        options.Authority = "https://identityserver:8081";
+        options.MetadataAddress = "https://identityserver:8081/.well-known/openid-configuration";
         options.ClientId = "MainApp";
         options.ResponseType = "code";
         options.Scope.Add("openid");
