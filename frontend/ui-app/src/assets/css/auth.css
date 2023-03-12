@@ -48,7 +48,7 @@ a:hover {
 }
 
 .input-field.error {
-    boeder: 1px solid red;
+    border: 1px solid red;
     color: red;
 }
 
