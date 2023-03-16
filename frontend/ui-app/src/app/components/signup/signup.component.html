@@ -7,38 +7,43 @@
                         <h3 class="pt-3 font-weight-bold">Sign Up</h3>
                     </div>
                     <div class="panel-body p-3">
-                        <form>
+                        <form [formGroup]="signUpForm">
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field" [class.error]="resolveError('firstName')">
                                     <span class="fa fa-hashtag p-2"></span>
-                                    <input type="text" placeholder="First Name">
+                                    <input formControlName="firstName" type="text" placeholder="First Name">
                                 </div>
                             </div>
+                            <small *ngIf="resolveError('firstName')" class="text-danger">*First name is required</small>
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field" [class.error]="resolveError('lastName')">
                                     <span class="fa fa-hashtag p-2"></span>
-                                    <input type="text" placeholder="Last Name">
+                                    <input formControlName="lastName" type="text" placeholder="Last Name">
                                 </div>
                             </div>
+                            <small *ngIf="resolveError('lastName')" class="text-danger">*Last name is required</small>
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field" [class.error]="resolveError('email')">
                                     <span class="fa fa-envelope p-2"></span>
-                                    <input type="text" placeholder="Email">
+                                    <input formControlName="email" type="text" placeholder="Email">
                                 </div>
                             </div>
+                            <small *ngIf="resolveError('email')" class="text-danger">*Email is required</small>
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field" [class.error]="resolveError('username')">
                                     <span class="fa fa-user p-2"></span>
-                                    <input type="text" placeholder="Username">
+                                    <input formControlName="username" type="text" placeholder="Username">
                                 </div>
                             </div>
+                            <small *ngIf="resolveError('username')" class="text-danger">*Username is required</small>
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field" [class.error]="resolveError('password')">
                                     <span class="fa fa-lock p-2"></span>
-                                    <input type="password" placeholder="Password">
+                                    <input formControlName="password" type="password" placeholder="Password">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Sign Up</button>
+                            <small *ngIf="resolveError('password')" class="text-danger">*Password is required</small>
+                            <button (click)="onSubmit()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Sign Up</button>
                             <div class="text-center pt-4 text-muted">Already have account?
                                 <a id="forget" routerLink="/login">Login</a>
                             </div>
