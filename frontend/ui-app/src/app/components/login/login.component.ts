@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,9 +12,14 @@ export class LoginComponent implements OnInit {
 
   type: string = "password";
   loginForm!: FormGroup;
+  returnUrl: string = '';
   
-  constructor(private fb: FormBuilder, private auth: AuthService) {
-    
+  constructor(private fb: FormBuilder, private auth: AuthService, private route: ActivatedRoute) {
+    this.route.queryParams
+      .subscribe(params => {
+        this.returnUrl = params['ReturnUrl'] ?? '';
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -25,7 +31,12 @@ export class LoginComponent implements OnInit {
 
   onLogin(){
     if(this.loginForm.valid){
-      this.auth.login(this.loginForm.value)
+      let requestBody = {
+        ...this.loginForm.value,
+        returnUrl: this.returnUrl
+      }
+      console.log(requestBody); 
+      this.auth.login(requestBody)
       .subscribe({
         next:(res) => {
           console.log("ok");

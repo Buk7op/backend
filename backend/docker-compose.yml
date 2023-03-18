@@ -32,10 +32,10 @@ services:
     volumes:
       - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
       - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
-  uiapp:
-    build: ../frontend/ui-app
-    container_name: uiapp
-    ports:
-      - 8084:4200
-    volumes:
-      - ../frontend/ui-app/src:/frontend/src
+  #uiapp:
+  #  build: ../frontend/ui-app
+  #  container_name: uiapp
+  #  ports:
+  #    - 8084:4200
+  #  volumes:
+  #    - ../frontend/ui-app/src:/frontend/src

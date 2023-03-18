@@ -67,19 +67,17 @@ namespace IdentityServer.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([Required] string email, [Required] string password, string returnurl)
+        public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
         {
-            
-            ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
+            ApplicationUser appUser = await _userManager.FindByEmailAsync(loginModel.Email);
             if (appUser != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(appUser, password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(appUser, loginModel.Password, false, false);
                 if (result.Succeeded)
                 {
-                    return Redirect(returnurl ?? "/");
+                    return Redirect(loginModel.ReturnUrl ?? "/");
                 }
             }
-            
 
             return BadRequest("Login Failed: Invalid Email or Password");
         }
