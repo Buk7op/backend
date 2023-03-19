@@ -8,6 +8,15 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
+services.AddCors(option =>
+{
+    option.AddPolicy("MyPolicy", builder =>
+    {
+        builder.AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowAnyOrigin();
+    });
+});
 
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
@@ -42,7 +51,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 

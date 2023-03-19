@@ -40,7 +40,6 @@ services.AddIdentityServer(options =>
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseErrorEvents = true;
     options.UserInteraction.LoginUrl = "/Identity/Login";
-    //options.UserInteraction.LoginUrl = "https://uiapp:8084/login";
 })
     .AddAspNetIdentity<ApplicationUser>()
     .AddInMemoryApiScopes(identityServerSettings.ApiScopes)
