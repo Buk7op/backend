@@ -67,15 +67,15 @@ namespace IdentityServer.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
+        public async Task<IActionResult> Login([Required] string email, [Required] string password, string returnurl)
         {
-            ApplicationUser appUser = await _userManager.FindByEmailAsync(loginModel.Email);
+            ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
             if (appUser != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(appUser, loginModel.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(appUser, password, false, false);
                 if (result.Succeeded)
                 {
-                    return Redirect(loginModel.ReturnUrl ?? "/");
+                    return Redirect(returnurl ?? "/");
                 }
             }
 

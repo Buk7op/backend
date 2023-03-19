@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 services.AddControllers();
+services.AddRazorPages();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddControllersWithViews();
@@ -64,6 +65,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseCors("MyPolicy");
 app.UseIdentityServer();
 app.UseAuthentication();
