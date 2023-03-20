@@ -83,3 +83,5 @@ About
 *.jwk
 *.crt
 *.pem
+
+node_modules/
