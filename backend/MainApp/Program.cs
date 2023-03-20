@@ -1,3 +1,4 @@
+using MainApp.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,9 @@ services.AddCors(option =>
         .AllowAnyOrigin();
     });
 });
+
+
+services.ConfigureDbSettings(builder.Configuration.GetSection("MongoDB"));
 
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
